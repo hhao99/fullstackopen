@@ -1,7 +1,16 @@
 ```mermaid
 sequenceDiagram
+participant user
 participant browser
 participant server
+
+    user->>browser: Input notes to the note input text box
+    user->>browser: User click the save button
+    activate browser
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
