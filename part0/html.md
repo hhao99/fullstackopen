@@ -1,3 +1,3 @@
-# html intro
+# HTML intro
 
 [Mozilla resource](https://developer.mozilla.org)
