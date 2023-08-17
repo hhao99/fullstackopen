@@ -1,3 +1,3 @@
 # html intro
 
-(Mozilla resource)[https://developer.mozilla.org]
+[Mozilla resource](https://developer.mozilla.org)
