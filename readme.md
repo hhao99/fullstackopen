@@ -4,7 +4,7 @@
 
 # part 0 - the general intro of the web
 
-[part 0 ]('/part0/readme.md')
+[part 0 ](/part0/readme.md)
 
 - General Info
 - Web fundemental
