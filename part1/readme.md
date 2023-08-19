@@ -11,4 +11,4 @@
 - error handling
 - do not render objects
 
-[exercise course_information_step](./course_information_step/readme.md)
+[exercise course_information_step](./course_information_step/README.md)
