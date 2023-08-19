@@ -4,21 +4,37 @@ participant user
 participant browser
 participant server
 
-    user->>browser: Input notes to the note input text box
-    user->>browser: User click the save button
-    activate browser
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/notes
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
     activate server
     server-->>browser: HTML document
     deactivate server
 
 
 
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: the js code
+    deactivate server
+
     Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
-    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    server-->>browser: [{
+        "content": "",
+        "date": "2023-08-18T17:07:53.371Z"
+    }, ... ]
+    deactivate server
+
+
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{
+        "content": "",
+        "date": "2023-08-18T17:07:53.371Z"
+    }, ... ]
     deactivate server
 
     Note right of browser: The browser executes the callback function that renders the notes
