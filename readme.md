@@ -8,3 +8,10 @@
 
 - General Info
 - Web fundemental
+
+[part 1](/part1/readme.md)
+
+- React
+- JavaScript
+- State management
+- More on state management
