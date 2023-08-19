@@ -8,7 +8,7 @@ participant server
     user->>browser: User click the save button
     activate browser
     Note: spa.js initiate the callback function to add new note to the list
-    browser -> browser: redraw the note list
+    browser->browser: redraw the note list
 
 
 
@@ -18,7 +18,5 @@ participant server
     activate server
     server-->>browser: {"message":"note created"}
     deactivate server
-
-
 
 ```
