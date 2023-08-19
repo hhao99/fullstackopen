@@ -7,7 +7,7 @@ participant server
     user->>browser: Input notes to the note input text box
     user->>browser: User click the save button
     activate browser
-    Note: spa.js initiate the callback function to add new note to the list
+    Note spa.js initiate the callback function to add new note to the list
     browser->browser: redraw the note list
 
 
