@@ -8,13 +8,12 @@ function Part({ part, exercises }) {
   );
 }
 function Content() {
-  const { part1, exercises1, part2, exercises2, part3, exercises3 } =
-    course_info;
+  const { parts } = course_info;
   return (
     <div>
-      <Part part={part1} exercises={exercises1} />
-      <Part part={part2} exercises={exercises2} />
-      <Part part={part3} exercises={exercises3} />
+      {parts.map((part) => (
+        <Part key={part.part} part={part.part} exercises={part.exercises} />
+      ))}
     </div>
   );
 }
