@@ -1,9 +1,13 @@
 import course_info from "./course";
 function Header() {
-  const { exercises1, exercises2, exercises3 } = course_info;
+  const { parts } = course_info;
+  let exercises_total = 0;
+  parts.forEach((part) => {
+    exercises_total += part.exercises;
+  });
   return (
     <div>
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      <p>Number of exercises {exercises_total}</p>
     </div>
   );
 }

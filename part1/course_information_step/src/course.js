@@ -2,15 +2,15 @@ const course_info = {
   course: "Half Stack application development",
   parts: [
     {
-      part: "Fundamentals of React",
+      name: "Fundamentals of React",
       exercises: 10,
     },
     {
-      part2: "Using props to pass data",
+      name: "Using props to pass data",
       exercises: 7,
     },
     {
-      part: "State of a component",
+      name: "State of a component",
       exercises: 14,
     },
   ],

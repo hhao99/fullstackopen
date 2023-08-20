@@ -12,7 +12,7 @@ function Content() {
   return (
     <div>
       {parts.map((part) => (
-        <Part key={part.part} part={part.part} exercises={part.exercises} />
+        <Part key={part.name} part={part.name} exercises={part.exercises} />
       ))}
     </div>
   );
