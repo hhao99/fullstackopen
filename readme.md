@@ -15,3 +15,6 @@
 - JavaScript
 - State management
 - More on state management
+
+[part 2](/part2/readme.md)
+[part 2](/part2/readme.md)
