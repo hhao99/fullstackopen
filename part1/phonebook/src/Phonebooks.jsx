@@ -12,7 +12,7 @@ const Phonebooks = ({ books, onAdd }) => {
     <div>
       <ul>
         {books.map((book) => (
-          <li key={book.id}>{book.name}</li>
+          <li key={book.name}>Name: {book.name} - number: {book.number}</li>
         ))}
       </ul>
       <div>
