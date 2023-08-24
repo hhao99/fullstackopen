@@ -4,9 +4,18 @@ import AddPhonebook from "./AddPhonebook";
 import Phonebook from "./Phonebook";
 import PhonebookFilter from "./PhonebookFilter";
 
-const Phonebooks = ({ books, onAdd }) => {
+const Phonebooks = () => {
+  const [books, setBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:3001/books")
+      .then((res) => res.json())
+      .then((books) => setBooks(books));
+
+    setFilteredBooks(books);
+  }, []);
 
   useEffect(() => {
     console.log("enter filter effect");
@@ -19,16 +28,11 @@ const Phonebooks = ({ books, onAdd }) => {
         )
       );
     }
-  }, [filter]);
+  }, [filter, books]);
 
   const handleAdd = (book) => {
-    onAdd(book);
-    setFilter(filter);
-    setFilteredBooks(
-      books.filter((book) =>
-        book.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    );
+    const id = books.length ? books[books.length - 1].id + 1 : 1;
+    setBooks([...books, { id, ...book }]);
   };
   const handleFilter = (e) => {
     if (e.key === "Enter") {
