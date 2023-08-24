@@ -1,53 +1,32 @@
+import AddPhonebook from "./AddPhonebook";
+import Phonebook from "./Phonebook";
+import PhonebookFilter from "./PhonebookFilter";
 import { useState } from "react";
 const Phonebooks = ({ books, onAdd }) => {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-  const handleAdd = () => {
-    onAdd({ name, number });
-    setName("");
-    setNumber("");
+  const [filteredBooks, setFilteredBooks] = useState(books);
+  const handleFilter = (e) => {
+    if (e.key === "Enter") {
+      setFilteredBooks(
+        books.filter((book) =>
+          book.name.toLowerCase().includes(e.target.value.toLowerCase())
+        )
+      );
+    }
+    if (e.key === "Escape") {
+      setFilteredBooks(books);
+    }
   };
-
   return (
     <div>
+      <h1>Phonebooks</h1>
+
+      <PhonebookFilter onFilter={handleFilter} onClear={handleFilter} />
       <ul>
-        {books.map((book) => (
-          <li key={book.name}>Name: {book.name} - number: {book.number}</li>
-        ))}
+        {filteredBooks &&
+          filteredBooks.map((book) => <Phonebook key={book.id} book={book} />)}
       </ul>
       <div>
-        <form onSubmit={(event) => event.preventDefault()}>
-          <h3>Add phone to book</h3>
-          <div>
-            <label>
-              Name:{" "}
-              <input
-                type="text"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              ></input>
-            </label>
-          </div>
-          <div>
-            <label>
-              number:{" "}
-              <input
-                type="text"
-                onChange={(e) => setNumber(e.target.value)}
-                value={number}
-              ></input>
-            </label>
-          </div>
-          <div>
-            <input
-              type="submit"
-              onClick={() => {
-                handleAdd();
-              }}
-              value="Add"
-            ></input>
-          </div>
-        </form>
+        <AddPhonebook onAdd={onAdd} />
       </div>
     </div>
   );
