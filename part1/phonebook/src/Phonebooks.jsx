@@ -3,24 +3,37 @@ import { useEffect, useState } from "react";
 import AddPhonebook from "./AddPhonebook";
 import Phonebook from "./Phonebook";
 import PhonebookFilter from "./PhonebookFilter";
+
 const Phonebooks = ({ books, onAdd }) => {
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    setFilteredBooks(books);
-  }, []);
-  const handleFilter = (e) => {
-    if (e.key === "Enter") {
-      setFilter(e.target.value);
+    if (filter === "") {
+      setFilteredBooks(books);
+    } else {
       setFilteredBooks(
         books.filter((book) =>
           book.name.toLowerCase().includes(filter.toLowerCase())
         )
       );
     }
+  }, [filter]);
+
+  const handleAdd = (book) => {
+    onAdd(book);
+    setFilteredBooks(
+      books.filter((book) =>
+        book.name.toLowerCase().includes(filter.toLowerCase())
+      )
+    );
+  };
+  const handleFilter = (e) => {
+    if (e.key === "Enter") {
+      setFilter(e.target.value);
+    }
     if (e.key === "Escape") {
-      setFilteredBooks(books);
+      setFilter("");
     }
   };
   return (
@@ -33,7 +46,7 @@ const Phonebooks = ({ books, onAdd }) => {
           filteredBooks.map((book) => <Phonebook key={book.id} book={book} />)}
       </ul>
       <div>
-        <AddPhonebook onAdd={onAdd} />
+        <AddPhonebook onAdd={handleAdd} />
       </div>
     </div>
   );
