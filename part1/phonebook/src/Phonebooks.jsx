@@ -1,14 +1,21 @@
+import { useEffect, useState } from "react";
+
 import AddPhonebook from "./AddPhonebook";
 import Phonebook from "./Phonebook";
 import PhonebookFilter from "./PhonebookFilter";
-import { useState } from "react";
 const Phonebooks = ({ books, onAdd }) => {
-  const [filteredBooks, setFilteredBooks] = useState(books);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    setFilteredBooks(books);
+  }, []);
   const handleFilter = (e) => {
     if (e.key === "Enter") {
+      setFilter(e.target.value);
       setFilteredBooks(
         books.filter((book) =>
-          book.name.toLowerCase().includes(e.target.value.toLowerCase())
+          book.name.toLowerCase().includes(filter.toLowerCase())
         )
       );
     }

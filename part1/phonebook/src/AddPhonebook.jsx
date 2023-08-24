@@ -1,12 +1,12 @@
 import { useState } from "react";
 const AddPhonebook = ({ onAdd }) => {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [name, setName] = useState("test");
+  const [number, setNumber] = useState("555-555-5555");
 
   const handleAdd = () => {
     onAdd({ name, number });
-    setName("");
-    setNumber("");
+    setName("test");
+    setNumber("555-555-5555");
   };
 
   return (

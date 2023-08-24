@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const PhonebookFilter = ({ onFilter, onClear }) => {
+const PhonebookFilter = ({ onFilter }) => {
   const [nameFilter, setNameFilter] = useState("");
   const handleFilter = (e) => {
     if (e.key === "Enter") {
@@ -9,13 +9,13 @@ const PhonebookFilter = ({ onFilter, onClear }) => {
     } else if (e.key === "Escape") {
       //  console.log("clear filter");
       setNameFilter("");
-      onClear(e);
+      onFilter(e);
     }
   };
 
   return (
     <div>
-      Name Filter{" "}
+      Name Filter{""}
       <input
         onKeyDown={(e) => handleFilter(e)}
         value={nameFilter}

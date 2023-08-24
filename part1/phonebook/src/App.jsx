@@ -11,17 +11,14 @@ const phone_list = [
 
 function App() {
   const [books, setBooks] = useState(phone_list);
-  const [filteredBooks, setFilterBooks] = useState(books);
-  const [filter, setFilter] = useState("");
-
   const handleAdd = (book) => {
     const id = books.length ? books[books.length - 1].id + 1 : 1;
-    console.log(id, book);
+    console.log("add book", id, book);
     setBooks([...books, { id, ...book }]);
-    alert(`Added ${book.name}`);
+    console.log("added", books);
   };
 
-  return <Phonebooks books={filteredBooks} onAdd={handleAdd} />;
+  return <Phonebooks books={books} onAdd={handleAdd} />;
 }
 
 export default App;
