@@ -9,6 +9,7 @@ const Phonebooks = ({ books, onAdd }) => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
+    console.log("enter filter effect");
     if (filter === "") {
       setFilteredBooks(books);
     } else {
@@ -22,6 +23,7 @@ const Phonebooks = ({ books, onAdd }) => {
 
   const handleAdd = (book) => {
     onAdd(book);
+    setFilter(filter);
     setFilteredBooks(
       books.filter((book) =>
         book.name.toLowerCase().includes(filter.toLowerCase())
