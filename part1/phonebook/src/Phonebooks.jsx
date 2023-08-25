@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import AddPhonebook from "./AddPhonebook";
 import Phonebook from "./Phonebook";
 import PhonebookFilter from "./PhonebookFilter";
+import bookService from "./phonebookService";
 
 const Phonebooks = () => {
   const [books, setBooks] = useState([]);
@@ -10,10 +11,7 @@ const Phonebooks = () => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3001/books")
-      .then((res) => res.json())
-      .then((books) => setBooks(books));
-
+    bookService.getAll().then((books) => setBooks(books));
     setFilteredBooks(books);
   }, []);
 
@@ -31,8 +29,9 @@ const Phonebooks = () => {
   }, [filter, books]);
 
   const handleAdd = (book) => {
-    const id = books.length ? books[books.length - 1].id + 1 : 1;
-    setBooks([...books, { id, ...book }]);
+    bookService.add(book).then((book) => {
+      setBooks([...books, book]);
+    });
   };
   const handleFilter = (e) => {
     if (e.key === "Enter") {
@@ -42,14 +41,22 @@ const Phonebooks = () => {
       setFilter("");
     }
   };
+
+  const handleDelete = (id) => {
+    bookService.remove(id).then(() => {
+      setBooks(books.filter((book) => book.id !== id));
+    });
+  };
   return (
     <div>
       <h1>Phonebooks</h1>
 
-      <PhonebookFilter onFilter={handleFilter} onClear={handleFilter} />
+      <PhonebookFilter onFilter={handleFilter} />
       <ul>
         {filteredBooks &&
-          filteredBooks.map((book) => <Phonebook key={book.id} book={book} />)}
+          filteredBooks.map((book) => (
+            <Phonebook key={book.id} onDelete={handleDelete} book={book} />
+          ))}
       </ul>
       <div>
         <AddPhonebook onAdd={handleAdd} />
