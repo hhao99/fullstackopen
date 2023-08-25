@@ -1,3 +1,4 @@
+import "./Phonebook.css";
 const Phonebook = ({ book, onDelete }) => {
   const handleRemove = () => {
     window.confirm("Are you sure to delete this book with id " + book.id);

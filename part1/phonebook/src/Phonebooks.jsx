@@ -1,3 +1,5 @@
+import "./Phonebooks.css";
+
 import { useEffect, useState } from "react";
 
 import AddPhonebook from "./AddPhonebook";
@@ -9,6 +11,9 @@ const Phonebooks = () => {
   const [books, setBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [filter, setFilter] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
+  const messageStyle = error ? { color: "red" } : { color: "green" };
 
   useEffect(() => {
     bookService.getAll().then((books) => setBooks(books));
@@ -29,9 +34,16 @@ const Phonebooks = () => {
   }, [filter, books]);
 
   const handleAdd = (book) => {
+    if (book.name === "") {
+      setError(true);
+      setMessage("Name is required");
+      return;
+    }
+    setError(false);
     bookService.add(book).then((book) => {
       setBooks([...books, book]);
     });
+    setMessage(`Added ${book.name}`);
   };
   const handleFilter = (e) => {
     if (e.key === "Enter") {
@@ -50,8 +62,9 @@ const Phonebooks = () => {
   return (
     <div>
       <h1>Phonebooks</h1>
-
+      <div style={messageStyle}>{message}</div>
       <PhonebookFilter onFilter={handleFilter} />
+
       <ul>
         {filteredBooks &&
           filteredBooks.map((book) => (
