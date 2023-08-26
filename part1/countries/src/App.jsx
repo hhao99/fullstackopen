@@ -10,11 +10,44 @@ const countryService = {
     });
   },
 };
+
+const Countries = ({ countries }) => {
+  // console.log(countries);
+
+  if (countries && countries.length > 1) {
+    console.log(countries);
+    return (
+      <ul>
+        {countries.map((country) => (
+          <li key={country.name.common}>{country.name.common}</li>
+        ))}
+      </ul>
+    );
+  } else if (countries.length === 1) {
+    console.log(countries);
+    const country = countries[0];
+    return (
+      <ul>
+        <h5>Country {country.name.common}</h5>
+        <div>
+          <p>Capital: {country.capital}</p>
+          <p>
+            Langues:{" "}
+            {Object.keys(country.languages).map((key) => (
+              <h5>{country.languages[key]}</h5>
+            ))}
+          </p>
+        </div>
+      </ul>
+    );
+  } else {
+    console.log(countries);
+  }
+};
 function App() {
   const [filter, setFilter] = useState("");
   const [initialCountries, setInitialCountries] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState({});
 
   useEffect(() => {
     countryService.getAll().then((countries) => {
@@ -27,11 +60,11 @@ function App() {
   }, [filter]);
 
   const handleSearch = () => {
-    const _selectedContries = initialCountries.filter((country) => {
+    const contries = initialCountries.filter((country) => {
       return country.name.common.toLowerCase().includes(filter.toLowerCase());
     });
-    console.log(filter, _selectedContries);
-    setSelectedCountries(_selectedContries);
+    // console.log(filter, _selectedContries);
+    setSelectedCountries(contries);
   };
   return (
     <>
@@ -50,17 +83,7 @@ function App() {
       </div>
       <div>
         <h3>countries</h3>
-        <div>
-          {selectedCountries.length && selectedCountries.length > 5 ? (
-            <h5>Too many matches, specify another filter</h5>
-          ) : (
-            <ul>
-              {selectedCountries.map((country) => (
-                <li key={country.name.common}>{country.name.common}</li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <Countries countries={selectedCountries} />
       </div>
       <div>
         <h5>total countries: {initialCountries.length} </h5>
