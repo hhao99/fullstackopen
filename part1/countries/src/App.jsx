@@ -34,7 +34,7 @@ const Countries = ({ countries }) => {
       </ul>
     );
   } else if (countries.length === 1) {
-    console.log(countries);
+    console.log(countries[0]);
     const country = countries[0];
     return (
       <ul>
@@ -47,6 +47,9 @@ const Countries = ({ countries }) => {
               <h5>{country.languages[key]}</h5>
             ))}
           </p>
+          <div>
+            <img src={`https://flagsapi.com/${country.cca2}/flat/64.png`} />
+          </div>
         </div>
       </ul>
     );
