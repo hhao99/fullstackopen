@@ -2,6 +2,8 @@ import "./App.css";
 
 import { useEffect, useState } from "react";
 
+import ReactDOM from "react-dom/client";
+
 const countryService = {
   baseUrl: "https://studies.cs.helsinki.fi/restcountries/api/all",
   getAll: () => {
@@ -15,11 +17,19 @@ const Countries = ({ countries }) => {
   // console.log(countries);
 
   if (countries && countries.length > 1) {
-    console.log(countries);
+    const handleShow = (e, country) => {
+      const c = <Countries countries={[country]} />;
+      console.log(`country-${country.name.common}`);
+      const el = document.getElementById(`country-${country.name.common}`);
+      ReactDOM.createRoot(el).render(c);
+    };
     return (
       <ul>
         {countries.map((country) => (
-          <li key={country.name.common}>{country.name.common}</li>
+          <li key={country.name.common} id={`country-${country.name.common}`}>
+            {country.name.common}
+            <button onClick={(e) => handleShow(e, country)}>show</button>
+          </li>
         ))}
       </ul>
     );
