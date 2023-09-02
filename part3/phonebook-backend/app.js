@@ -4,7 +4,13 @@ const fs = require("fs");
 
 const app = express();
 // some middleware
-app.use(morgan("dev"));
+// app.use(
+//   morgan(":method :url :status :res[content-length] - :response-time ms")
+// );
+morgan.token("body", (req, res) => JSON.stringify(req.body));
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms :body")
+);
 app.use(express.json());
 
 let books = require("./books.json").books;
@@ -35,7 +41,6 @@ app.get("/books/:id", (req, res) => {
 });
 app.post("/books", (req, res) => {
   const { name, number } = req.body;
-  console.log(name, number);
   const book = books.find((book) => book.name === name);
   if (book !== undefined) {
     res.status(409).send("Book already exists");

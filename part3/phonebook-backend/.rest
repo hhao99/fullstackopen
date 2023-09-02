@@ -2,14 +2,14 @@
 #delete http://localhost:3001/books/3
 # get http://localhost:3001/books
 # post new books
-# POST http://localhost:3001/books/ HTTP/1.1
-# Content-Type: application/json
+POST http://localhost:3001/books/ HTTP/1.1
+Content-Type: application/json
 
-# {
-#     "name": "Eric Haliss", 
-#     "number": "555-555-5555"
-# }
+{
+    "name": "Eric Halsss", 
+    "number": "555-555-5555"
+}
 
 
 
-get http://localhost:3001/books
+# get http://localhost:3001/books
