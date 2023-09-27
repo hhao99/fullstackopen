@@ -1,12 +1,25 @@
 const express = require("express");
 const morgan = require("morgan");
 const fs = require("fs");
+const cors = require("cors");
 
+const log = (request, response, next) => {
+  console.log("request method: ", request.method);
+  console.log("request path: ", request.path);
+  console.log("request body: ", request.body);
+  next();
+};
 const app = express();
 // some middleware
-// app.use(
-//   morgan(":method :url :status :res[content-length] - :response-time ms")
-// );
+// cors, allow cross-origin requests
+app.use(cors());
+app.use(express.json());
+
+// static files
+app.use(express.static("dist"));
+app.use(log);
+
+// morgan log request
 morgan.token("body", (req, res) => JSON.stringify(req.body));
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
@@ -60,7 +73,7 @@ app.delete("/books/:id", (req, res) => {
   res.status(200).send(books);
 });
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
