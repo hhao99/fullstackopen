@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const fs = require("fs");
 const cors = require("cors");
 
+const { Person, mongoose } = require("./mongo");
 const log = (request, response, next) => {
   console.log("request method: ", request.method);
   console.log("request path: ", request.path);
@@ -26,15 +27,15 @@ app.use(
 );
 app.use(express.json());
 
-let books = require("./books.json").books;
-
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.get("/books", (req, res) => {
-  res.send(books);
+app.get("/books", async (req, res) => {
+  let people = await Person.find().then((data) => data);
+  res.send(people);
 });
+
 app.get("/books/info", (req, res) => {
   const now = new Date();
   res.send(
@@ -44,13 +45,14 @@ app.get("/books/info", (req, res) => {
   );
 });
 
-app.get("/books/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const book = books.find((book) => book.id === id);
-  if (book === undefined) {
+app.get("/books/:id", async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  const person = await Person.findById(id).then((person) => person);
+  if (person === undefined) {
     res.status(404).send("Book not found");
   }
-  res.status(200).send(book);
+  res.status(200).send(person);
 });
 app.post("/books", (req, res) => {
   const { name, number } = req.body;
