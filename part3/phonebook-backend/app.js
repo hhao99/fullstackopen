@@ -56,23 +56,25 @@ app.get("/books/:id", async (req, res) => {
 });
 app.post("/books", (req, res) => {
   const { name, number } = req.body;
-  const book = books.find((book) => book.name === name);
-  if (book !== undefined) {
-    res.status(409).send("Book already exists");
-  } else {
-    const newBook = {
-      id: books.length + 1,
-      name,
-      number,
-    };
-    books.push(newBook);
+
+  if (name === undefined || number === undefined) {
+    res.status(400).send("name and number are required");
   }
+  const person = new Person({
+    name,
+    number,
+  });
+  person.save().then(() => {
+    res.send(200).end();
+  });
 });
-app.delete("/books/:id", (req, res) => {
-  console.log(req.params.id);
-  const id = Number(req.params.id);
-  books = books.filter((book) => book.id !== id);
-  res.status(200).send(books);
+app.delete("/books/:id", (req, res, next) => {
+  const id = req.params.id;
+  Person.findByIdAndDelete(id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch((err) => next(err));
 });
 
 const port = process.env.PORT || 3001;
