@@ -36,12 +36,12 @@ app.get("/books", async (req, res) => {
   res.send(people);
 });
 
-app.get("/books/info", (req, res) => {
+app.get("/books/info", async (req, res) => {
   const now = new Date();
   res.send(
-    `<p>Book info: there are ${
-      books.length
-    } books.</p> Last updated: ${now.toString()}</p>`
+    `<p>Book info: there are ${await Person.countDocuments().then(
+      (data) => data
+    )} books.</p> Last updated: ${now.toString()}</p>`
   );
 });
 
